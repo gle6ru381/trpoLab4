@@ -241,6 +241,68 @@ bool move(Figure board[SIZE][SIZE], Pair pair, Side side)
         }
         break;
     }
+    case 'B': {
+        if (abs(rangeNum) != abs(rangeCh))
+            return false;
+        bool diffChar = true;
+        bool diffNum = true;
+        if (bNum < eNum)
+            diffNum = false;
+        if (bCh < eCh)
+            diffChar = false;
+        int num;
+        int ch;
+        if (diffNum) {
+            num = bNum - 1;
+            if (diffChar) {
+                ch = bCh - 1;
+                for (; num > eNum; num--, ch--) {
+                    if (boardAt(board, num, ch)->name != ' ')
+                        return false;
+                }
+            } else {
+                ch = bCh + 1;
+                for (; num > eNum; num--, ch++) {
+                    if (boardAt(board, num, ch)->name != ' ')
+                        return false;
+                }
+            }
+        } else {
+            num = bNum + 1;
+            if (diffChar) {
+                ch = bCh - 1;
+                for (; num < eNum; num++, ch--) {
+                    if (boardAt(board, num, ch)->name != ' ')
+                        return false;
+                }
+            } else {
+                ch = bCh + 1;
+                for (; num < eNum; num++, ch++) {
+                    if (boardAt(board, num, ch)->name != ' ')
+                        return false;
+                }
+            }
+        }
+        switch (pair.separator) {
+        case '-': {
+            if (boardAt(board, eNum, eCh)->name != ' ')
+                return false;
+            mainFigure->first_move = false;
+            swap(mainFigure, endFigure);
+            break;
+        }
+        case 'x': {
+            if (boardAt(board, eNum, eCh)->name == ' ')
+                return false;
+            endFigure->first_move = false;
+            endFigure->name = mainFigure->name;
+            endFigure->side = mainFigure->side;
+            mainFigure->side = empty;
+            mainFigure->name = ' ';
+            break;
+        }
+        }
+    }
     }
     return true;
 }
