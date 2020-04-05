@@ -1,0 +1,3 @@
+bin/chess*
+build/*.o
+build/*.d
