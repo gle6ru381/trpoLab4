@@ -47,8 +47,8 @@ int main()
     int i = 1;
     while (true) {
         printf("%d. ", i++);
-        Pair whiteMove = board_read();
-        Pair blackMove = board_read();
+        Pair whiteMove = board_read(stdin);
+        Pair blackMove = board_read(stdin);
 
         bool one = move(board, whiteMove, white);
         bool two = false;

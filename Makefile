@@ -12,7 +12,7 @@ bin/test: $(patsubst test/%.c,build/test/%.o,$(wildcard test/*.c))
 	gcc $^ $(FLAGS) -o $@
 
 build/test/%.o: test/%.c
-	gcc -I thirdparty src -o $@ $(FLAGS) -c -MD $<
+	gcc -I thirdparty -I src -o $@ $(FLAGS) -c -MD $<
 
 clean:
 	rm build/src/*.o

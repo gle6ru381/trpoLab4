@@ -1,6 +1,6 @@
 #include "board_read.h"
 
-Pair board_read()
+Pair board_read(FILE* stream)
 {
     Pair pair;
     String* first = string_new(5);
@@ -12,8 +12,8 @@ Pair board_read()
     String* buff = string_new(10);
     if (!buff)
         exit(EXIT_FAILURE);
-    char c;
-    while ((c = getchar()) != ' ' && c != '\n') {
+    char c = '\0';
+    while ((c = fgetc(stream)) != ' ' && c != '\n') {
         if ((string_push_back(buff, c)) == -1)
             exit(EXIT_FAILURE);
     }
