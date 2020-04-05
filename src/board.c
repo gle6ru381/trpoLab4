@@ -144,11 +144,16 @@ bool move(Figure board[SIZE][SIZE], Pair pair, Side side)
         return false;
     int rangeNum = eNum - bNum;
     int rangeCh = eCh - bCh;
+    if (!(rangeNum || rangeCh))
+        return false;
     Figure* mainFigure = boardAt(board, bNum, bCh);
     Figure* endFigure = boardAt(board, eNum, eCh);
-    if (mainFigure->name == ' ')
+    switch (mainFigure->name) {
+    case ' ': {
         return false;
-    if (mainFigure->name == 'P') {
+        break;
+    }
+    case 'P': {
         if (mainFigure->side == white && rangeNum < 0)
             return false;
         if (mainFigure->side == black && rangeNum > 0)
@@ -183,6 +188,59 @@ bool move(Figure board[SIZE][SIZE], Pair pair, Side side)
             mainFigure->side = empty;
             mainFigure->name = ' ';
         }
+        break;
+    }
+    case 'R': {
+        if ((rangeNum != 0) && (rangeCh) != 0) {
+            return false;
+        }
+        int i, end;
+        if (rangeNum) {
+            if (rangeNum > 0) {
+                i = bNum + 1;
+                end = eNum;
+            } else {
+                i = eNum;
+                end = bNum - 1;
+            }
+            for (; i < end; i++) {
+                if (boardAt(board, i, bCh)->name != ' ')
+                    return false;
+            }
+        } else {
+            if (rangeCh > 0) {
+                i = bCh + 1;
+                end = eCh;
+            } else {
+                i = eCh;
+                end = bCh - 1;
+            }
+            for (; i < end; i++) {
+                if (boardAt(board, bNum, i)->name != ' ')
+                    return false;
+            }
+        }
+        switch (pair.separator) {
+        case '-': {
+            if (boardAt(board, eNum, eCh)->name != ' ')
+                return false;
+            mainFigure->first_move = false;
+            swap(mainFigure, endFigure);
+            break;
+        }
+        case 'x': {
+            if (boardAt(board, eNum, eCh)->name == ' ')
+                return false;
+            endFigure->first_move = false;
+            endFigure->name = mainFigure->name;
+            endFigure->side = mainFigure->side;
+            mainFigure->side = empty;
+            mainFigure->name = ' ';
+            break;
+        }
+        }
+        break;
+    }
     }
     return true;
 }

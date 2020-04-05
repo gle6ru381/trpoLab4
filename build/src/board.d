@@ -1,4 +1,4 @@
-build/board.o: src/board.c src/board.h \
+build/src/board.o: src/board.c src/board.h \
  D:/Qt/Tools/mingw730_64/x86_64-w64-mingw32/include/ctype.h \
  D:/Qt/Tools/mingw730_64/x86_64-w64-mingw32/include/crtdefs.h \
  D:/Qt/Tools/mingw730_64/x86_64-w64-mingw32/include/_mingw.h \
