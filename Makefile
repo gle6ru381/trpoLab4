@@ -8,7 +8,7 @@ build/src/%.o: src/%.c
 
 test: bin/test
 
-bin/test: $(patsubst test/%.c,build/test/%.o,$(wildcard test/*.c))
+bin/test: $(patsubst test/%.c,build/test/%.o,$(wildcard test/*.c)) build/src/board.o build/src/board_print_plain.o build/src/board_read.o
 	gcc $^ $(FLAGS) -o $@
 
 build/test/%.o: test/%.c
